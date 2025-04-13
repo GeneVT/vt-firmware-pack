@@ -1,0 +1,11 @@
+{
+  "aws": {
+    "url": "a1snrwtdyvr04x-ats.iot.us-west-2.amazonaws.com",
+    "ROOT_CA_CERT": "/etc/conf.d/.aws/AmazonRootCA1.pem",
+    "PRIVATE_KEY": "/etc/conf.d/.aws/test-device-private.key",
+    "DEVICE_CERT": "/etc/conf.d/.aws/test-device-cert.pem"
+  },
+  "bud": {
+    "serial": "vt-fitness-test"
+  }
+}

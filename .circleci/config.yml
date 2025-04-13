@@ -1,0 +1,107 @@
+version: 2
+jobs:
+  test:
+    machine: true
+    working_directory: ~/vt-firmware-pack
+    steps:
+      - checkout
+      - run:
+          name: Login to dockerhub
+          command: |
+            docker login --username $DOCKER_USER --password $DOCKER_PASS
+            make run_container
+
+      - run:
+          name: Compile and run the linters
+          command: docker exec vt-firmware-pack bash -c 'make build'
+
+      - run:
+          name: Run the test cases
+          command: docker exec vt-firmware-pack bash -c 'make test'
+
+      - run:
+          name: Build the debian package
+          command: docker exec vt-firmware-pack bash -c 'make deb_pkg'
+
+  build:
+    machine: true
+    working_directory: ~/vt-firmware-pack
+    steps:
+      - checkout
+      - run:
+          name: Login to dockerhub
+          command: |
+            docker login --username $DOCKER_USER --password $DOCKER_PASS
+            make run_container
+
+      - run:
+          name: Compile and run the linters
+          command: docker exec vt-firmware-pack bash -c 'make build'
+
+      - run:
+          name: Build the debian package
+          command: docker exec vt-firmware-pack bash -c 'make deb_pkg'
+
+      - save_cache:
+          paths:
+            - ~/vt-firmware-pack/out
+          key: v1-vt-firmware-pack-{{ .Branch }}-{{ .Revision }}
+
+  deploy:
+    docker:
+      - image: cimg/ruby:3.2.2
+    working_directory: ~/vt-firmware-pack/out
+    steps:
+      - restore_cache:
+          keys:
+            - v1-vt-firmware-pack-{{ .Branch }}-{{ .Revision }}
+
+      - run:
+          name: Install PackageCloud CLI
+          command: gem install package_cloud
+
+      - run:
+          name: Push to PackageCloud
+          command: |
+            set -x
+            VERSION=`echo "${CIRCLE_TAG}" | cut -d "v" -f 2`
+            DPKG_FILE=vt-firmware-pack_${VERSION}_all.deb
+            package_cloud push verdigris/packages/debian/jessie ${DPKG_FILE}
+            package_cloud push verdigris/packages/debian/buster ${DPKG_FILE}
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test:
+          context: embedded
+
+  release:
+    jobs:
+      - build:
+          context: embedded
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /\d+(\.\d+){0,2}/
+
+      - approve-deploy:
+          type: approval
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /\d+(\.\d+){0,2}/
+
+      - deploy:
+          context: embedded
+          requires:
+            - approve-deploy
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /\d+(\.\d+){0,2}/

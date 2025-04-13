@@ -1,0 +1,52 @@
+{
+  "packages": {
+    "vt-wireless": {
+      "current_version": "2.0.14"
+    },
+    "vt-volttron": {
+      "current_version": "0.1.2"
+    },
+    "vt-init": {
+      "current_version": "1.8.20"
+    },
+    "vt-setup-tools": {
+      "current_version": "6.3.22"
+    },
+    "vt-fitness": {
+      "current_version": "2.4.2"
+    },
+    "vt-leds": {
+      "current_version": "0.9.0"
+    },
+    "vt-gdaq": {
+      "current_version": "2.1.3"
+    },
+    "python-vt-py-libs": {
+      "current_version": "0.5.1-1"
+    },
+    "vt-energon": {
+      "current_version": "0.7.1"
+    },
+    "vt-modules": {
+      "current_version": "2.3.10"
+    },
+    "vt-crone": {
+      "current_version": "1.4.2"
+    },
+    "vt-bpm": {
+      "current_version": "4.1.0"
+    },
+    "vt-pollinate": {
+      "current_version": "uninstall"
+    },
+    "vt-conf-ev2": {
+      "current_version": "0.0.6"
+    },
+    "vt-powerkit": {
+      "current_version": "1.0.4"
+    },
+    "vt-kernel": {
+      "current_version": "1.1.1"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+out/
+.DS_Store
+
+# Code Editor
+.vscode/
+
+# Vim backup files
+*.swp
+
+# CMake build folder
+build/
+
