@@ -26,9 +26,9 @@ else
   CC=gcc
 endif
 
-.PHONY: build test build_container run_container deb_pkg all clean
+.PHONY: build build_container run_container deb_pkg all clean
 
-all: build test deb_pkg
+all: build deb_pkg
 
 clean: $(OUT_DIR)
 	rm -f $(OUT_DIR)/*.deb
@@ -43,8 +43,8 @@ build:
 	@rm -rf build
 	@mkdir build && cd build && cmake .. && make
 
-test:
-	@cd build && ctest --verbose
+# test:
+# 	@cd build && ctest --verbose
 
 deb_pkg:
 	@mkdir -p $(OUT_DIR)

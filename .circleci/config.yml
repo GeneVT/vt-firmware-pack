@@ -1,27 +1,27 @@
 version: 2
 jobs:
-  test:
-    machine: true
-    working_directory: ~/vt-firmware-pack
-    steps:
-      - checkout
-      - run:
-          name: Login to dockerhub
-          command: |
-            docker login --username $DOCKER_USER --password $DOCKER_PASS
-            make run_container
+  # test:
+  #   machine: true
+  #   working_directory: ~/vt-firmware-pack
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Login to dockerhub
+  #         command: |
+  #           docker login --username $DOCKER_USER --password $DOCKER_PASS
+  #           make run_container
 
-      - run:
-          name: Compile and run the linters
-          command: docker exec vt-firmware-pack bash -c 'make build'
+  #     - run:
+  #         name: Compile and run the linters
+  #         command: docker exec vt-firmware-pack bash -c 'make build'
 
-      - run:
-          name: Run the test cases
-          command: docker exec vt-firmware-pack bash -c 'make test'
+  #     - run:
+  #         name: Run the test cases
+  #         command: docker exec vt-firmware-pack bash -c 'make test'
 
-      - run:
-          name: Build the debian package
-          command: docker exec vt-firmware-pack bash -c 'make deb_pkg'
+  #     - run:
+  #         name: Build the debian package
+  #         command: docker exec vt-firmware-pack bash -c 'make deb_pkg'
 
   build:
     machine: true

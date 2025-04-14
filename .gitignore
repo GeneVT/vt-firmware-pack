@@ -10,3 +10,4 @@ out/
 # CMake build folder
 build/
 
+tmp/

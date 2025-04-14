@@ -1,11 +1,11 @@
-Source: vt-fitness
+Source: vt-firmware-pack
 Section: unknown
 Priority: optional
 Maintainer: GUO-HAO LI <gene@verdigris.co>
 Build-Depends: debhelper (>= 8.0.0)
 Package: vt-firmware-pack
 Architecture: all
-Depends: jq
+Depends: jq, vt-bpm
 Description: Verdigris firmware-pack
 Version: Overriden by Makefile
 
